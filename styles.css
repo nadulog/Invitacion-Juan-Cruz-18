@@ -196,7 +196,9 @@ main { overflow: hidden; }
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 70px 16px 60px;
+  height: auto;
+  min-height: var(--h);
+  padding: 90px 16px 100px;
   line-height: 1.4;
   background:
     radial-gradient(ellipse at 50% 0%, rgba(40, 90, 255, .45), transparent 45%),
@@ -220,7 +222,7 @@ main { overflow: hidden; }
 .gallery-heading {
   position: relative;
   z-index: 1;
-  margin-bottom: 4svh;
+  margin-bottom: 3svh;
   text-align: center;
 }
 
@@ -241,19 +243,18 @@ main { overflow: hidden; }
   letter-spacing: .04em;
 }
 
-/* Tres polaroids: 2008 y 2016 arriba, 2026 abajo al centro */
+/* Tres polaroids grandes, una abajo de la otra */
 .polaroid-gallery {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: repeat(2, auto);
-  justify-content: center;
-  column-gap: 5vw;
+  justify-items: center;
+  row-gap: clamp(40px, 6svh, 64px);
 }
 
 .polaroid {
   position: relative;
-  width: min(42vw, 21svh, 250px);
+  width: min(80vw, 380px);
   padding: 5% 5% 0;
   border: 0;
   background: #f7f8fb;
@@ -264,9 +265,9 @@ main { overflow: hidden; }
   -webkit-tap-highlight-color: transparent;
 }
 
-.polaroid:nth-child(1) { transform: rotate(-6deg); }
-.polaroid:nth-child(2) { transform: rotate(5deg) translateY(3svh); }
-.polaroid:nth-child(3) { grid-column: 1 / -1; justify-self: center; margin-top: 6svh; transform: rotate(-2deg); }
+.polaroid:nth-child(1) { transform: rotate(-3deg); }
+.polaroid:nth-child(2) { transform: rotate(2.5deg); }
+.polaroid:nth-child(3) { transform: rotate(-2deg); }
 
 .polaroid:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
 
@@ -434,3 +435,255 @@ main { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
   .audio-toggle__bars i { animation: none; transform: scaleY(.7); }
 }
+
+/* Bola de boliche de la portada: brillo que recorre los espejitos + reflejos girando por la pantalla.
+   Centro de la bola en la imagen: (880, 150) de 941 px de ancho, radio ~330 px */
+.disco-ball-shine {
+  position: absolute;
+  z-index: 1;
+  left: calc((880 - 330) / 941 * 100cqw);
+  top: calc((150 - 330) / 941 * 100cqw);
+  width: calc(660 / 941 * 100cqw);
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 50%;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  -webkit-mask-image: radial-gradient(circle, #000 62%, transparent 71%);
+  mask-image: radial-gradient(circle, #000 62%, transparent 71%);
+}
+
+/* Franjas de luz que pasan de izquierda a derecha, como los espejos al girar */
+.disco-ball-shine::before {
+  content: "";
+  position: absolute;
+  inset: 0 -60%;
+  background: repeating-linear-gradient(100deg,
+    transparent 0 9%,
+    rgba(170, 200, 255, .0) 9%,
+    rgba(190, 215, 255, .55) 11.5%,
+    rgba(255, 255, 255, .85) 12.2%,
+    rgba(190, 215, 255, .55) 13%,
+    transparent 15.5% 24%);
+  animation: ball-spin 3.2s linear infinite;
+}
+
+/* Destellos puntuales en algunos espejitos */
+.disco-ball-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 30% 62%, rgba(255,255,255,.95) 0 1.2%, transparent 3%),
+    radial-gradient(circle at 48% 80%, rgba(255,255,255,.9) 0 1%, transparent 2.6%),
+    radial-gradient(circle at 22% 40%, rgba(255,255,255,.85) 0 .9%, transparent 2.4%),
+    radial-gradient(circle at 62% 70%, rgba(255,255,255,.9) 0 1.1%, transparent 2.8%);
+  animation: ball-glints 1.6s steps(1) infinite;
+}
+
+@keyframes ball-spin {
+  from { transform: translateX(0); }
+  to { transform: translateX(24%); }
+}
+
+@keyframes ball-glints {
+  0% { opacity: 1; transform: translate(0, 0); }
+  25% { opacity: .2; transform: translate(6%, -3%); }
+  50% { opacity: .9; transform: translate(-4%, 5%); }
+  75% { opacity: .35; transform: translate(3%, 4%); }
+}
+
+/* Reflejos de la bola: giran alrededor de su centro y barren toda la portada */
+.disco-lights {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.disco-lights__spin {
+  position: absolute;
+  left: calc(880 / 941 * 100cqw);
+  top: calc(150 / 941 * 100cqw);
+  width: 0;
+  height: 0;
+  animation: lights-spin 26s linear infinite;
+  will-change: transform;
+}
+
+.disco-light {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--s);
+  height: calc(var(--s) * .62);
+  border-radius: 12%;
+  opacity: 0;
+  background: linear-gradient(135deg, rgba(240, 246, 255, .95), rgba(150, 185, 255, .85));
+  box-shadow: 0 0 1.4cqw .3cqw rgba(90, 140, 255, .75), 0 0 3cqw rgba(60, 110, 255, .45);
+  filter: blur(.12cqw);
+  transform: translate(-50%, -50%) rotate(var(--r));
+  animation: light-twinkle var(--d) ease-in-out var(--delay) infinite;
+}
+
+@keyframes lights-spin { to { transform: rotate(-360deg); } }
+
+@keyframes light-twinkle {
+  0%, 100% { opacity: 0; }
+  30%, 70% { opacity: var(--o); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .disco-ball-shine, .disco-lights { display: none; }
+}
+
+/* Raspadita plateada sobre la fecha (adaptada de la invitación de Alma Jazmín) */
+.date-reveal { position: absolute; z-index: 30; inset: 0; overflow: hidden; background: #c9cdd4; touch-action: none; user-select: none; -webkit-user-select: none; pointer-events: auto; }
+.date-reveal.is-initialized { background: transparent; }
+.date-reveal__canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; cursor: ew-resize; }
+.date-reveal__copy { position: absolute; top: 50%; left: 50%; z-index: 2; display: grid; justify-items: center; width: min(86%, 560px); translate: -50% -50%; color: var(--navy); line-height: 1.2; text-align: center; pointer-events: none; transition: opacity 240ms ease, transform 240ms ease; }
+.date-reveal.is-scratching .date-reveal__copy { opacity: .25; transform: scale(.98); }
+.date-reveal__copy small { margin-bottom: 18px; color: #1a3fb8; font: 600 clamp(10px, 2.8vw, 15px)/1.3 var(--serif); letter-spacing: .3em; }
+.date-reveal__copy p { margin: 0; font: 700 clamp(22px, 6.4vw, 42px)/1.15 var(--serif); letter-spacing: .08em; }
+.date-reveal__copy > span:not(.date-reveal__star) { margin-top: 12px; font: 500 clamp(17px, 4.6vw, 24px)/1.3 var(--body-serif); letter-spacing: .04em; }
+.date-reveal__gesture { position: relative; width: min(190px, 54vw); height: 76px; margin-top: 26px; transition: opacity 180ms ease; }
+.date-reveal__gesture-trace { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; fill: none; stroke: rgb(3 11 44 / .4); stroke-width: 1; stroke-dasharray: 2 5; }
+.date-reveal__gesture > img { position: absolute; top: -19px; left: -19px; width: 44px; height: auto; mix-blend-mode: multiply; offset-path: path("M154 10 C42 8 34 30 94 37 C156 44 150 68 36 66"); offset-rotate: 0deg; animation: date-gesture-swipe 2.2s ease-in-out infinite; }
+.date-reveal.has-interacted .date-reveal__gesture, .date-reveal.is-scratching .date-reveal__gesture { opacity: 0; }
+.date-reveal__copy button { margin-top: 26px; padding: 12px 18px; border: 0; border-bottom: 1px solid var(--navy); background: transparent; color: var(--navy); font: 600 clamp(11px, 2.8vw, 14px)/1 var(--serif); letter-spacing: .24em; pointer-events: auto; cursor: pointer; }
+.date-reveal__copy button:focus-visible { outline: 2px solid var(--royal); outline-offset: 3px; }
+.date-reveal__star, .date-magic span { position: absolute; width: 15px; aspect-ratio: 1; background: var(--navy); clip-path: polygon(50% 0, 57% 41%, 100% 50%, 57% 59%, 50% 100%, 43% 59%, 0 50%, 43% 41%); }
+.date-reveal__star--one { top: -78px; left: 8%; }
+.date-reveal__star--two { top: -40px; right: 4%; width: 10px; background: var(--royal); }
+.date-reveal__star--three { right: 16%; bottom: -70px; width: 12px; }
+.date-reveal.is-finishing { pointer-events: none; animation: date-cover-out 360ms ease-in forwards; }
+.date-magic { position: absolute; top: 50%; left: 50%; z-index: 35; width: 1px; height: 1px; pointer-events: none; }
+.date-magic span { top: -7px; left: -7px; opacity: 0; background: #fff; filter: drop-shadow(0 0 6px #1f63ff); }
+.date-magic span:nth-child(even) { background: #8fb2ff; }
+.date-magic.is-active span { animation: date-magic-star 640ms cubic-bezier(.16, 1, .3, 1) both; }
+.date-panel.is-revealed .stage { animation: date-image-enter 720ms 60ms cubic-bezier(.16, 1, .3, 1) both; }
+@keyframes date-gesture-swipe { 0% { offset-distance: 0%; opacity: 0; } 10%, 88% { opacity: 1; } 100% { offset-distance: 100%; opacity: 0; } }
+@keyframes date-cover-out { to { opacity: 0; } }
+@keyframes date-magic-star { 0% { opacity: 0; transform: rotate(var(--angle)) translateX(0) scale(.35); } 28% { opacity: 1; } 100% { opacity: 0; transform: rotate(var(--angle)) translateX(var(--distance)) scale(1.05); } }
+@keyframes date-image-enter { from { opacity: .4; scale: 1.04; } to { opacity: 1; scale: 1; } }
+@media (prefers-reduced-motion: reduce) { .date-magic { display: none; } .date-reveal__gesture > img { animation: none; offset-distance: 50%; } .date-panel.is-revealed .stage { animation: none; } }
+
+/* Dress code: brillitos sobre "Elegante" y la aclaración de colores (el texto viejo se borró de la imagen) */
+.elegant-sparkles span {
+  position: absolute;
+  z-index: 2;
+  top: var(--top);
+  left: var(--left);
+  width: var(--size);
+  aspect-ratio: 1;
+  opacity: 0;
+  background: #fff;
+  clip-path: polygon(50% 0, 57% 42%, 100% 50%, 57% 58%, 50% 100%, 43% 58%, 0 50%, 43% 42%);
+  filter: drop-shadow(0 0 1cqw #a9c4ff);
+  animation: elegant-sparkle 3.4s ease-in-out var(--delay) infinite;
+}
+
+@keyframes elegant-sparkle {
+  0%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(.1) rotate(0); }
+  12% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(45deg); }
+  26% { opacity: 0; transform: translate(-50%, -50%) scale(.2) rotate(90deg); }
+}
+
+.dress-note {
+  position: absolute;
+  z-index: 2;
+  top: 38.6%;
+  left: 50%;
+  width: 90%;
+  margin: 0;
+  transform: translate(-50%, -50%);
+  font: 600 5cqw/1.12 var(--body-serif);
+  letter-spacing: .02em;
+  text-align: center;
+  background: linear-gradient(180deg, #ffffff 0%, #eef1f7 45%, #b9c3d8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 .3cqw .5cqw rgba(0, 0, 25, .7));
+}
+
+/* Confirmación: luces de discoteca (haces que barren + reflejos de colores girando) */
+.party-beams {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.party-beams i {
+  position: absolute;
+  top: -8%;
+  width: 26cqw;
+  height: 130%;
+  transform-origin: 50% 0;
+  background: linear-gradient(180deg, var(--beam) 0%, transparent 85%);
+  clip-path: polygon(44% 0, 56% 0, 100% 100%, 0 100%);
+  filter: blur(1.2cqw);
+  opacity: .55;
+  animation: beam-sweep var(--t) ease-in-out var(--d) infinite alternate;
+}
+
+.party-beams i:nth-child(1) { left: -2%; --beam: rgba(110, 150, 255, .9); --from: -38deg; --to: 12deg; --t: 4.2s; --d: 0s; }
+.party-beams i:nth-child(2) { left: 26%; --beam: rgba(180, 130, 255, .8); --from: 22deg; --to: -24deg; --t: 3.6s; --d: -1.2s; }
+.party-beams i:nth-child(3) { left: 48%; --beam: rgba(90, 220, 255, .75); --from: -26deg; --to: 26deg; --t: 4.8s; --d: -2.4s; }
+.party-beams i:nth-child(4) { left: 76%; --beam: rgba(120, 160, 255, .9); --from: 36deg; --to: -12deg; --t: 3.9s; --d: -.6s; }
+
+@keyframes beam-sweep {
+  from { transform: rotate(var(--from)); }
+  to { transform: rotate(var(--to)); }
+}
+
+.disco-lights--party .disco-lights__spin {
+  left: 50cqw;
+  top: 4cqw;
+  animation-duration: 18s;
+  animation-direction: reverse;
+}
+
+.disco-lights--party .disco-light {
+  background: var(--c);
+  box-shadow: 0 0 1.6cqw .4cqw var(--c), 0 0 3.4cqw color-mix(in srgb, var(--c) 55%, transparent);
+  filter: blur(.2cqw);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .elegant-sparkles, .party-beams { display: none; }
+}
+
+/* Dirección escrita en HTML (se borró de las imágenes para sumar "Tafí Viejo") */
+.image-modal__sheet { container-type: inline-size; }
+
+.venue-address {
+  position: absolute;
+  z-index: 2;
+  top: 32%;
+  left: 50%;
+  width: 92%;
+  margin: 0;
+  transform: translate(-50%, -50%);
+  font: 600 4.5cqw/1.15 var(--body-serif);
+  font-variant-numeric: lining-nums;
+  letter-spacing: .01em;
+  text-align: center;
+  white-space: nowrap;
+  background: linear-gradient(180deg, #ffffff 0%, #eef1f7 45%, #b9c3d8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 .3cqw .5cqw rgba(0, 0, 25, .7));
+  pointer-events: none;
+}
+
+.venue-address--modal { top: 30.4%; font-size: 4.3cqw; }
+
+/* Cuenta regresiva: los mismos reflejos de la portada, girando desde arriba */
+.disco-lights--countdown .disco-lights__spin { left: 50cqw; top: -14cqw; animation-duration: 30s; }

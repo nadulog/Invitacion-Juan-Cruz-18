@@ -28,6 +28,8 @@
       <img class="sheet__bg" src="assets/portada.webp" alt="" aria-hidden="true">
       <div class="stage">
         <img src="assets/portada.webp" alt="Juan Cruz. Mis 18" width="941" height="1672">
+        <div class="disco-ball-shine" aria-hidden="true"></div>
+        <div class="disco-lights" aria-hidden="true"><div class="disco-lights__spin"></div></div>
         <div class="disco-sparkles" aria-hidden="true"></div>
       </div>
     </section>
@@ -36,6 +38,7 @@
       <img class="sheet__bg" src="assets/cuenta-regresiva.webp" alt="" aria-hidden="true">
       <div class="stage">
         <img src="assets/cuenta-regresiva.webp" alt="" width="1122" height="1402">
+        <div class="disco-lights disco-lights--countdown" aria-hidden="true"><div class="disco-lights__spin"></div></div>
         <h2 id="countdown-title" class="sr-only">Faltan para los 18 de Juan Cruz</h2>
         <div class="countdown" aria-live="polite" aria-atomic="true">
           <div class="countdown__unit"><span class="silver" id="days" data-text="00">00</span><small>DÍAS</small></div>
@@ -46,18 +49,48 @@
       </div>
     </section>
 
-    <section class="sheet" aria-label="Fecha y hora">
+    <section class="sheet date-panel" aria-label="Fecha y hora">
       <img class="sheet__bg" src="assets/fecha.webp" alt="" aria-hidden="true" loading="lazy">
       <div class="stage">
         <img src="assets/fecha.webp" alt="21 de noviembre, de 22:00 a 05:00 hs" width="1122" height="1402" loading="lazy">
         <button class="hotspot calendar-hotspot" id="calendarButton" type="button" aria-label="Agregar la fiesta al calendario"></button>
+      </div>
+      <div class="date-reveal" id="dateReveal" aria-label="Deslizá varias veces para descubrir la fecha">
+        <canvas class="date-reveal__canvas" id="dateRevealCanvas" aria-hidden="true"></canvas>
+        <div class="date-reveal__copy">
+          <span class="date-reveal__star date-reveal__star--one" aria-hidden="true"></span>
+          <span class="date-reveal__star date-reveal__star--two" aria-hidden="true"></span>
+          <span class="date-reveal__star date-reveal__star--three" aria-hidden="true"></span>
+          <small>LA NOCHE DE MIS 18</small>
+          <p>DESLIZÁ PARA DESCUBRIR</p>
+          <span>Pasá el dedo varias veces</span>
+          <div class="date-reveal__gesture" aria-hidden="true">
+            <svg class="date-reveal__gesture-trace" viewBox="0 0 190 76" preserveAspectRatio="none">
+              <path d="M154 10 C42 8 34 30 94 37 C156 44 150 68 36 66" />
+            </svg>
+            <img src="assets/date-reveal-hand.png" alt="">
+          </div>
+          <button id="dateRevealButton" type="button">REVELAR FECHA</button>
+        </div>
+      </div>
+      <div class="date-magic" id="dateMagic" aria-hidden="true">
+        <span style="--angle: -12deg; --distance: 92px"></span>
+        <span style="--angle: 24deg; --distance: 76px"></span>
+        <span style="--angle: 62deg; --distance: 104px"></span>
+        <span style="--angle: 108deg; --distance: 82px"></span>
+        <span style="--angle: 152deg; --distance: 98px"></span>
+        <span style="--angle: 196deg; --distance: 74px"></span>
+        <span style="--angle: 238deg; --distance: 106px"></span>
+        <span style="--angle: 286deg; --distance: 86px"></span>
+        <span style="--angle: 326deg; --distance: 110px"></span>
       </div>
     </section>
 
     <section class="sheet" aria-label="Cómo llegar">
       <img class="sheet__bg" src="assets/ubicacion.webp" alt="" aria-hidden="true" loading="lazy">
       <div class="stage">
-        <img src="assets/ubicacion.webp" alt="Cómo llegar. Casa Paradiso, Maipú, Ruta 9 km 1305" width="1122" height="1402" loading="lazy">
+        <img src="assets/ubicacion.webp" alt="Cómo llegar. Casa Paradiso" width="1122" height="1402" loading="lazy">
+        <p class="venue-address">Maipú, Ruta 9 km 1305, Tafí Viejo</p>
         <button class="hotspot location-hotspot" type="button" data-open="locationDialog" aria-label="Ver opciones para llegar"></button>
       </div>
     </section>
@@ -65,7 +98,18 @@
     <section class="sheet" aria-label="Código de vestimenta">
       <img class="sheet__bg" src="assets/dress-code.webp" alt="" aria-hidden="true" loading="lazy">
       <div class="stage">
-        <img src="assets/dress-code.webp" alt="Dress code elegante. Evitar los colores azul, blanco y celeste" width="1122" height="1402" loading="lazy">
+        <img src="assets/dress-code.webp" alt="Dress code elegante" width="1122" height="1402" loading="lazy">
+        <div class="elegant-sparkles" aria-hidden="true">
+          <span style="--left: 25%; --top: 22%; --size: 4.2cqw; --delay: 0s"></span>
+          <span style="--left: 37%; --top: 31%; --size: 2.6cqw; --delay: .9s"></span>
+          <span style="--left: 46%; --top: 23.5%; --size: 3.4cqw; --delay: 1.7s"></span>
+          <span style="--left: 55%; --top: 33%; --size: 2.4cqw; --delay: .4s"></span>
+          <span style="--left: 63%; --top: 25%; --size: 3.8cqw; --delay: 2.2s"></span>
+          <span style="--left: 72%; --top: 30%; --size: 2.8cqw; --delay: 1.2s"></span>
+          <span style="--left: 76%; --top: 21.5%; --size: 3.2cqw; --delay: 2.8s"></span>
+          <span style="--left: 31%; --top: 27%; --size: 2.2cqw; --delay: 3.1s"></span>
+        </div>
+        <p class="dress-note">Se reservan<br>el celeste y blanco</p>
       </div>
     </section>
 
@@ -103,6 +147,8 @@
       <img class="sheet__bg" src="assets/confirmacion.webp" alt="" aria-hidden="true" loading="lazy">
       <div class="stage">
         <img src="assets/confirmacion.webp" alt="Confirmá tu asistencia. ¡Quiero festejar con vos! Confirmá hasta el 10 de noviembre" width="1122" height="1402" loading="lazy">
+        <div class="party-beams" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        <div class="disco-lights disco-lights--party" aria-hidden="true"><div class="disco-lights__spin"></div></div>
         <a class="hotspot rsvp-hotspot" href="https://bloomdate-rsvp.netlify.app/r/cumple-18-juan-cruz" target="_blank" rel="noopener" aria-label="Confirmar asistencia"></a>
       </div>
     </section>
@@ -119,7 +165,8 @@
 
   <dialog id="locationDialog" class="image-modal" aria-label="Cómo llegar a Casa Paradiso">
     <div class="image-modal__sheet">
-      <img src="assets/ubicacion-modal.webp" alt="Cómo llegar. Casa Paradiso, Maipú, Ruta 9 km 1305" width="1122" height="1402">
+      <img src="assets/ubicacion-modal.webp" alt="Cómo llegar. Casa Paradiso" width="1122" height="1402">
+      <p class="venue-address venue-address--modal">Maipú, Ruta 9 km 1305, Tafí Viejo</p>
       <button class="hotspot location-close" type="button" data-close aria-label="Cerrar"></button>
       <a class="hotspot location-maps" href="https://www.google.com/maps/search/Casa%20Paradiso/@-26.73605594,-65.23405788,17z?hl=es" target="_blank" rel="noopener" aria-label="Abrir en Google Maps"></a>
       <a class="hotspot location-waze" href="https://waze.com/ul?ll=-26.73605594,-65.23405788&amp;navigate=yes" target="_blank" rel="noopener" aria-label="Abrir en Waze"></a>
@@ -144,6 +191,7 @@
   <audio id="invitationAudio" src="assets/musica.mp3" preload="auto" loop autoplay></audio>
 
   <script src="script.js"></script>
+  <script src="date-reveal.js"></script>
   <script>
     (function () {
       var token = new URLSearchParams(window.location.search).get('invite');

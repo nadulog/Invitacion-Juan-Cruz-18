@@ -1,5 +1,5 @@
 const EVENT_DATE = new Date('2026-11-21T22:00:00-03:00');
-const ADDRESS = 'Casa Paradiso, Maipú, Ruta 9 km 1305 — https://www.google.com/maps/search/Casa%20Paradiso/@-26.73605594,-65.23405788,17z?hl=es';
+const ADDRESS = 'Casa Paradiso, Maipú, Ruta 9 km 1305, Tafí Viejo — https://www.google.com/maps/search/Casa%20Paradiso/@-26.73605594,-65.23405788,17z?hl=es';
 
 const countdownParts = {
   days: document.querySelector('#days'),
@@ -108,7 +108,7 @@ document.querySelector('#calendarButton').addEventListener('click', () => {
     'DTSTART:20261122T010000Z',
     'DTEND:20261122T080000Z',
     'SUMMARY:Mis 18 Juan Cruz',
-    'LOCATION:Casa Paradiso\\, Maipú\\, Ruta 9 km 1305',
+    'LOCATION:Casa Paradiso\\, Maipú\\, Ruta 9 km 1305\\, Tafí Viejo',
     'DESCRIPTION:¡Te espero para celebrar mis 18!',
     'END:VEVENT',
     'END:VCALENDAR'
@@ -175,3 +175,27 @@ if (invitationAudio && audioToggle) {
     }
   });
 }
+
+// Reflejos de discoteca: puntos de luz a distintas distancias del centro de giro
+// (en la portada giran alrededor de la bola; en la confirmación, desde arriba y de colores)
+document.querySelectorAll('.disco-lights__spin').forEach((discoLights) => {
+  const party = discoLights.closest('.disco-lights--party');
+  const colors = ['#ffffff', '#7fa8ff', '#b28cff', '#5fe0ff'];
+  for (let index = 0; index < (party ? 90 : 130); index += 1) {
+    const angle = (index * 137.5) % 360 * Math.PI / 180;
+    const distance = 42 + ((index * 53) % 150);
+    const light = document.createElement('span');
+    light.className = 'disco-light';
+    light.style.cssText = [
+      `--x:${(Math.cos(angle) * distance).toFixed(1)}cqw`,
+      `--y:${(Math.sin(angle) * distance).toFixed(1)}cqw`,
+      `--s:${(2.2 + distance * .03).toFixed(2)}cqw`,
+      `--r:${Math.round(angle * 180 / Math.PI) + 45}deg`,
+      `--o:${(.7 + (index % 4) * .1).toFixed(2)}`,
+      `--d:${(2.4 + (index % 5) * .6).toFixed(1)}s`,
+      `--delay:${(-(index % 9) * .45).toFixed(2)}s`,
+      party ? `--c:${colors[index % colors.length]}` : ''
+    ].join(';');
+    discoLights.appendChild(light);
+  }
+});
