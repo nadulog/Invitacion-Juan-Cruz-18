@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#04103a">
+  <meta name="description" content="¡Te invito a celebrar mis 18! Sábado 21 de noviembre de 2026 · Casa Paradiso. ¡Te espero!">
+  <title>Mis 18 Juan Cruz</title>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Mis 18 Juan Cruz ✨">
+  <meta property="og:description" content="¡Te invito a celebrar mis 18! Sábado 21 de noviembre de 2026 · Casa Paradiso. ¡Te espero!">
+  <meta property="og:image" content="assets/vista-previa.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Mis 18 Juan Cruz">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" as="image" href="assets/portada.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main>
+    <section class="sheet cover-sheet" aria-label="Portada de la invitación">
+      <img class="sheet__bg" src="assets/portada.webp" alt="" aria-hidden="true">
+      <div class="stage">
+        <img src="assets/portada.webp" alt="Juan Cruz. Mis 18" width="941" height="1672">
+        <div class="disco-sparkles" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <section class="sheet" aria-labelledby="countdown-title">
+      <img class="sheet__bg" src="assets/cuenta-regresiva.webp" alt="" aria-hidden="true">
+      <div class="stage">
+        <img src="assets/cuenta-regresiva.webp" alt="" width="1122" height="1402">
+        <h2 id="countdown-title" class="sr-only">Faltan para los 18 de Juan Cruz</h2>
+        <div class="countdown" aria-live="polite" aria-atomic="true">
+          <div class="countdown__unit"><span class="silver" id="days" data-text="00">00</span><small>DÍAS</small></div>
+          <div class="countdown__unit"><span class="silver" id="hours" data-text="00">00</span><small>HORAS</small></div>
+          <div class="countdown__unit"><span class="silver" id="minutes" data-text="00">00</span><small>MIN</small></div>
+          <div class="countdown__unit"><span class="silver" id="seconds" data-text="00">00</span><small>SEG</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sheet" aria-label="Fecha y hora">
+      <img class="sheet__bg" src="assets/fecha.webp" alt="" aria-hidden="true" loading="lazy">
+      <div class="stage">
+        <img src="assets/fecha.webp" alt="21 de noviembre, de 22:00 a 05:00 hs" width="1122" height="1402" loading="lazy">
+        <button class="hotspot calendar-hotspot" id="calendarButton" type="button" aria-label="Agregar la fiesta al calendario"></button>
+      </div>
+    </section>
+
+    <section class="sheet" aria-label="Cómo llegar">
+      <img class="sheet__bg" src="assets/ubicacion.webp" alt="" aria-hidden="true" loading="lazy">
+      <div class="stage">
+        <img src="assets/ubicacion.webp" alt="Cómo llegar. Casa Paradiso, Maipú, Ruta 9 km 1305" width="1122" height="1402" loading="lazy">
+        <button class="hotspot location-hotspot" type="button" data-open="locationDialog" aria-label="Ver opciones para llegar"></button>
+      </div>
+    </section>
+
+    <section class="sheet" aria-label="Código de vestimenta">
+      <img class="sheet__bg" src="assets/dress-code.webp" alt="" aria-hidden="true" loading="lazy">
+      <div class="stage">
+        <img src="assets/dress-code.webp" alt="Dress code elegante. Evitar los colores azul, blanco y celeste" width="1122" height="1402" loading="lazy">
+      </div>
+    </section>
+
+    <section class="sheet gallery-section" aria-labelledby="galleryTitle">
+      <div class="gallery-heading">
+        <p>MOMENTOS</p>
+        <h2 id="galleryTitle" class="silver" data-text="GALERÍA">GALERÍA</h2>
+        <span>Un pedacito de mí</span>
+      </div>
+      <div class="polaroid-gallery">
+        <button class="polaroid" type="button" data-gallery="assets/galeria-2008.webp" aria-label="Ampliar foto de 2008">
+          <img src="assets/galeria-2008.webp" alt="Juan Cruz recién nacido, dormido con chupete" loading="lazy" style="object-position: 62% center">
+          <span class="polaroid__year">2008</span>
+        </button>
+        <button class="polaroid" type="button" data-gallery="assets/galeria-2016.webp" aria-label="Ampliar foto de 2016">
+          <img src="assets/galeria-2016.webp" alt="Juan Cruz de chico con uniforme escolar" loading="lazy" style="object-position: center 12%">
+          <span class="polaroid__year">2016</span>
+        </button>
+        <button class="polaroid" type="button" data-gallery="assets/galeria-2026.webp" aria-label="Ampliar foto de 2026">
+          <img src="assets/galeria-2026.webp" alt="Juan Cruz apoyado en un auto blanco de noche" loading="lazy" style="object-position: center 45%">
+          <span class="polaroid__year">2026</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="sheet" aria-label="Regalos">
+      <img class="sheet__bg" src="assets/regalos.webp" alt="" aria-hidden="true" loading="lazy">
+      <div class="stage">
+        <img src="assets/regalos.webp" alt="Regalos. Tu presencia es mi mejor regalo. Si querés hacerme un obsequio, podés hacerlo por transferencia" width="1122" height="1402" loading="lazy">
+        <button class="hotspot gift-hotspot" type="button" data-open="giftDialog" aria-label="Ver datos para regalos"></button>
+      </div>
+    </section>
+
+    <section class="sheet" aria-label="Confirmación de asistencia">
+      <img class="sheet__bg" src="assets/confirmacion.webp" alt="" aria-hidden="true" loading="lazy">
+      <div class="stage">
+        <img src="assets/confirmacion.webp" alt="Confirmá tu asistencia. ¡Quiero festejar con vos! Confirmá hasta el 10 de noviembre" width="1122" height="1402" loading="lazy">
+        <a class="hotspot rsvp-hotspot" href="https://bloomdate-rsvp.netlify.app/r/cumple-18-juan-cruz" target="_blank" rel="noopener" aria-label="Confirmar asistencia"></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <img src="assets/footer.webp" alt="Hecho con amor por BloomDate" width="2172" height="724" loading="lazy">
+    <div class="footer-links" aria-label="Enlaces de BloomDate">
+      <a href="https://wa.me/541140436324?text=quiero%20mas%20info%20sobre%20invitaciones" target="_blank" rel="noopener" aria-label="WhatsApp de BloomDate"></a>
+      <a href="https://www.instagram.com/bloomdate.invitaciones/" target="_blank" rel="noopener" aria-label="Instagram de BloomDate"></a>
+      <a href="https://bloomdate-site.netlify.app/" target="_blank" rel="noopener" aria-label="Sitio web de BloomDate"></a>
+    </div>
+  </footer>
+
+  <dialog id="locationDialog" class="image-modal" aria-label="Cómo llegar a Casa Paradiso">
+    <div class="image-modal__sheet">
+      <img src="assets/ubicacion-modal.webp" alt="Cómo llegar. Casa Paradiso, Maipú, Ruta 9 km 1305" width="1122" height="1402">
+      <button class="hotspot location-close" type="button" data-close aria-label="Cerrar"></button>
+      <a class="hotspot location-maps" href="https://www.google.com/maps/search/Casa%20Paradiso/@-26.73605594,-65.23405788,17z?hl=es" target="_blank" rel="noopener" aria-label="Abrir en Google Maps"></a>
+      <a class="hotspot location-waze" href="https://waze.com/ul?ll=-26.73605594,-65.23405788&amp;navigate=yes" target="_blank" rel="noopener" aria-label="Abrir en Waze"></a>
+      <button class="hotspot location-copy" type="button" id="copyAddress" aria-label="Copiar dirección"></button>
+      <p class="toast" id="copyStatus" role="status"></p>
+    </div>
+  </dialog>
+
+  <dialog id="giftDialog" class="image-modal" aria-label="Datos para transferencia">
+    <div class="image-modal__sheet">
+      <img src="assets/regalos-modal.webp" alt="Regalos. Alias: juaaan.mpp. Titular: Juan Cruz Ybarra" width="1122" height="1402">
+      <button class="hotspot gift-close" type="button" data-close aria-label="Cerrar"></button>
+      <button class="hotspot gift-copy" type="button" id="copyGift" aria-label="Copiar alias"></button>
+      <p class="toast" id="giftStatus" role="status"></p>
+    </div>
+  </dialog>
+
+  <script src="script.js"></script>
+  <script>
+    (function () {
+      var token = new URLSearchParams(window.location.search).get('invite');
+      if (!token) return;
+      document.querySelectorAll('a[href*="/r/"]').forEach(function (a) {
+        var url = new URL(a.href);
+        url.searchParams.set('invite', token);
+        a.href = url.toString();
+      });
+    })();
+  </script>
+</body>
+</html>
