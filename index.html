@@ -7,9 +7,10 @@
   <meta name="description" content="¡Te invito a celebrar mis 18! Sábado 21 de noviembre de 2026 · Casa Paradiso. ¡Te espero!">
   <title>Mis 18 Juan Cruz</title>
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bloomdate-juancruz18.netlify.app/">
   <meta property="og:title" content="Mis 18 Juan Cruz ✨">
   <meta property="og:description" content="¡Te invito a celebrar mis 18! Sábado 21 de noviembre de 2026 · Casa Paradiso. ¡Te espero!">
-  <meta property="og:image" content="assets/vista-previa.jpg">
+  <meta property="og:image" content="https://bloomdate-juancruz18.netlify.app/assets/vista-previa.jpg">
   <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -135,6 +136,12 @@
       <p class="toast" id="giftStatus" role="status"></p>
     </div>
   </dialog>
+
+  <button class="audio-toggle" id="audioToggle" type="button" aria-label="Reproducir música" title="Reproducir música" aria-pressed="false">
+    <svg class="audio-toggle__note" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18.5a2.5 2.5 0 1 1-2.5-2.5c.56 0 1.08.19 1.5.5V5.2l11-2.2v12.5a2.5 2.5 0 1 1-2.5-2.5c.56 0 1.08.19 1.5.5V7.3l-9 1.8v9.4Z"/></svg>
+    <span class="audio-toggle__bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+  </button>
+  <audio id="invitationAudio" src="assets/musica.mp3" preload="auto" loop autoplay></audio>
 
   <script src="script.js"></script>
   <script>

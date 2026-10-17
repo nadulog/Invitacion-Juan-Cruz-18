@@ -386,3 +386,51 @@ main { overflow: hidden; }
   * { transition: none !important; animation: none !important; }
   .disco-sparkle { display: none; }
 }
+
+/* Botón de música */
+.audio-toggle {
+  position: fixed;
+  right: max(16px, env(safe-area-inset-right));
+  bottom: max(16px, env(safe-area-inset-bottom));
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  color: var(--navy);
+  border: 1px solid rgba(255, 255, 255, .85);
+  border-radius: 50%;
+  background: linear-gradient(150deg, #ffffff 0%, #dfe4ee 35%, #9aa5bb 60%, #eef1f6 85%);
+  box-shadow: 0 8px 22px rgba(0, 0, 25, .55), 0 0 18px rgba(60, 110, 255, .45), inset 0 0 0 3px rgba(255, 255, 255, .35);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.audio-toggle:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+
+.audio-toggle__note { width: 24px; height: 24px; fill: currentColor; }
+
+/* Mientras suena, la nota se cambia por un ecualizador */
+.audio-toggle__bars { display: none; align-items: flex-end; gap: 3px; height: 20px; }
+.audio-toggle__bars i { width: 3px; height: 100%; border-radius: 2px; background: currentColor; transform-origin: bottom; animation: eq-bar .9s ease-in-out infinite; }
+.audio-toggle__bars i:nth-child(2) { animation-delay: -.3s; }
+.audio-toggle__bars i:nth-child(3) { animation-delay: -.6s; }
+.audio-toggle__bars i:nth-child(4) { animation-delay: -.15s; }
+
+.audio-toggle.is-playing .audio-toggle__note { display: none; }
+.audio-toggle.is-playing .audio-toggle__bars { display: flex; }
+.audio-toggle.is-playing { animation: music-pulse 1.8s ease-in-out infinite; }
+
+@keyframes eq-bar {
+  0%, 100% { transform: scaleY(.3); }
+  50% { transform: scaleY(1); }
+}
+
+@keyframes music-pulse {
+  50% { box-shadow: 0 8px 22px rgba(0, 0, 25, .55), 0 0 0 8px rgba(120, 160, 255, .22), inset 0 0 0 3px rgba(255, 255, 255, .35); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .audio-toggle__bars i { animation: none; transform: scaleY(.7); }
+}

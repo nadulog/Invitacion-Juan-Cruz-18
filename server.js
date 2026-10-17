@@ -32,10 +32,23 @@ http.createServer((request, response) => {
       return;
     }
 
-    response.writeHead(200, {
+    const headers = {
       'Content-Type': types[path.extname(file).toLowerCase()] || 'application/octet-stream',
-      'Cache-Control': 'no-cache'
-    });
+      'Cache-Control': 'no-cache',
+      'Accept-Ranges': 'bytes'
+    };
+
+    // Safari en iPhone pide el audio por partes (Range): sin esto no lo reproduce
+    const range = /bytes=(\d*)-(\d*)/.exec(request.headers.range || '');
+    if (range) {
+      const start = range[1] ? Number(range[1]) : Math.max(0, stats.size - Number(range[2]));
+      const end = range[1] && range[2] ? Math.min(Number(range[2]), stats.size - 1) : stats.size - 1;
+      response.writeHead(206, { ...headers, 'Content-Range': `bytes ${start}-${end}/${stats.size}`, 'Content-Length': end - start + 1 });
+      fs.createReadStream(file, { start, end }).pipe(response);
+      return;
+    }
+
+    response.writeHead(200, { ...headers, 'Content-Length': stats.size });
     fs.createReadStream(file).pipe(response);
   });
 }).listen(port, '0.0.0.0', () => {

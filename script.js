@@ -120,3 +120,58 @@ document.querySelector('#calendarButton').addEventListener('click', () => {
   link.click();
   URL.revokeObjectURL(url);
 });
+
+// Música: arranca sola al abrir; si el navegador la bloquea, arranca con el primer toque en cualquier parte
+const invitationAudio = document.querySelector('#invitationAudio');
+const audioToggle = document.querySelector('#audioToggle');
+
+if (invitationAudio && audioToggle) {
+  const unlockEvents = ['pointerdown', 'touchend', 'click', 'keydown'];
+  let pausedByUser = false;
+  let resumeWhenVisible = false;
+
+  const updateAudioButton = () => {
+    const isPlaying = !invitationAudio.paused;
+    audioToggle.classList.toggle('is-playing', isPlaying);
+    audioToggle.setAttribute('aria-pressed', String(isPlaying));
+    audioToggle.setAttribute('aria-label', isPlaying ? 'Pausar música' : 'Reproducir música');
+    audioToggle.title = isPlaying ? 'Pausar música' : 'Reproducir música';
+  };
+
+  const stopListeningForUnlock = () => {
+    unlockEvents.forEach((type) => document.removeEventListener(type, unlockAudio, true));
+  };
+
+  function unlockAudio(event) {
+    if (pausedByUser || audioToggle.contains(event.target)) return;
+    invitationAudio.play().then(stopListeningForUnlock).catch(() => {});
+  }
+
+  invitationAudio.volume = 0.85;
+  invitationAudio.play().then(stopListeningForUnlock).catch(() => {
+    unlockEvents.forEach((type) => document.addEventListener(type, unlockAudio, true));
+  });
+
+  audioToggle.addEventListener('click', () => {
+    if (invitationAudio.paused) {
+      pausedByUser = false;
+      invitationAudio.play().then(stopListeningForUnlock).catch(() => {});
+    } else {
+      pausedByUser = true;
+      invitationAudio.pause();
+    }
+  });
+
+  invitationAudio.addEventListener('play', updateAudioButton);
+  invitationAudio.addEventListener('pause', updateAudioButton);
+
+  // Se pausa al salir de la pestaña o bloquear el celular, y sigue al volver
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      resumeWhenVisible = !invitationAudio.paused;
+      invitationAudio.pause();
+    } else if (resumeWhenVisible) {
+      invitationAudio.play().catch(() => {});
+    }
+  });
+}
